@@ -39,6 +39,61 @@ namespace MVCFunLearn.Controllers
             return View(movie);
         }
 
+        //Display the New customer page
+        public ActionResult New()
+        {
+            var geners = _context.Genres.ToList();
+            var viewModel = new MovieFormViewModel
+            {
+                Geners = geners
+            };
+            return View("MovieForm", viewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.Single(m => m.Id == id);
+            if (movie == null)
+                return HttpNotFound();
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Geners = _context.Genres.ToList()
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+                _context.Movies.Add(movie);
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleasedDate = movie.ReleasedDate;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+        }
+
+        #region Dummy Methods for learning
+        public ActionResult Edit1(int Id)
+        {
+            return Content("Id = " + Id);
+        }
+
+        [Route("movies/released/{year}/{month:regex(\\d{4}):range(1, 12)}")]
+        public ActionResult ByReleaseDate(int year, int month)
+        {
+            return Content(year + "/" + month);
+
+        }
+
         //Hard coded data
         private IEnumerable<Movie> GetMovies()
         {
@@ -67,19 +122,6 @@ namespace MVCFunLearn.Controllers
                 Customers = customers
             };
             return View(viewModel);
-        }
-
-        #region Dummy Methods for learning
-        public ActionResult Edit(int Id)
-        {
-            return Content("Id = " + Id);
-        }
-
-        [Route("movies/released/{year}/{month:regex(\\d{4}):range(1, 12)}")]
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-            return Content(year + "/" + month);
-
         }
         #endregion
 
