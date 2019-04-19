@@ -13,6 +13,15 @@ namespace MVCFunLearn
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
+            //Custome Route created by Me - Just for Understanding
+            //routes.MapRoute(
+            //    "MoviesByReleaseDate",
+            //    "Movies/released/{year}/{month}",
+            //    new { Controller = "Movies", action = "ByReleaseDate" },
+            //    new { year = @"\d{4}", month = @"\d{2}" });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
