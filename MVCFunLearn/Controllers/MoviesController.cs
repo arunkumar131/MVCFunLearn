@@ -45,29 +45,43 @@ namespace MVCFunLearn.Controllers
             var geners = _context.Genres.ToList();
             var viewModel = new MovieFormViewModel
             {
-                Geners = geners
+                Genres = geners
             };
             return View("MovieForm", viewModel);
         }
 
         public ActionResult Edit(int id)
         {
-            var movie = _context.Movies.Single(m => m.Id == id);
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
             if (movie == null)
                 return HttpNotFound();
-            var viewModel = new MovieFormViewModel
+
+            var viewModel = new MovieFormViewModel(movie)
             {
-                Movie = movie,
-                Geners = _context.Genres.ToList()
+                Genres = _context.Genres.ToList()
             };
 
             return View("MovieForm", viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel(movie)
+                {
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
             if (movie.Id == 0)
                 _context.Movies.Add(movie);
+
             else
             {
                 var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
@@ -77,7 +91,9 @@ namespace MVCFunLearn.Controllers
                 movieInDb.GenreId = movie.GenreId;
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
+
             _context.SaveChanges();
+
             return RedirectToAction("Index", "Movies");
         }
 

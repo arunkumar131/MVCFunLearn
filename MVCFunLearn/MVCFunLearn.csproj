@@ -229,6 +229,14 @@
     <Compile Include="Migrations\201904191022136_PopulateMovieWithGenreId.Designer.cs">
       <DependentUpon>201904191022136_PopulateMovieWithGenreId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904231241580_UpdateReleaseDateInMovie.cs" />
+    <Compile Include="Migrations\201904231241580_UpdateReleaseDateInMovie.Designer.cs">
+      <DependentUpon>201904231241580_UpdateReleaseDateInMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904231244502_UpdateReleaseDateInMovie1.cs" />
+    <Compile Include="Migrations\201904231244502_UpdateReleaseDateInMovie1.Designer.cs">
+      <DependentUpon>201904231244502_UpdateReleaseDateInMovie1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -236,7 +244,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\Min18YearsIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieStockRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MovieFormViewModel.cs" />
@@ -361,6 +371,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904191022136_PopulateMovieWithGenreId.resx">
       <DependentUpon>201904191022136_PopulateMovieWithGenreId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231241580_UpdateReleaseDateInMovie.resx">
+      <DependentUpon>201904231241580_UpdateReleaseDateInMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904231244502_UpdateReleaseDateInMovie1.resx">
+      <DependentUpon>201904231244502_UpdateReleaseDateInMovie1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
