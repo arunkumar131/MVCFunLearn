@@ -17,7 +17,6 @@ namespace MVCFunLearn.ViewModels
             {
                 if (Customer != null && Customer.Id != 0)
                     return "Edit Customer";
-
                 return "New Customer";
             }
         }

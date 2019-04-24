@@ -43,6 +43,7 @@ namespace MVCFunLearn.Controllers
         public ActionResult New()
         {
             var geners = _context.Genres.ToList();
+
             var viewModel = new MovieFormViewModel
             {
                 Genres = geners
@@ -140,6 +141,5 @@ namespace MVCFunLearn.Controllers
             return View(viewModel);
         }
         #endregion
-
     }
 }
