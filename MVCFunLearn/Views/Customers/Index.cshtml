@@ -15,6 +15,7 @@
             <th>Customer</th>
             <th>Membership Type</th>
             <th>Delete</th>
+            <th>Update</th>
         </tr>
     </thead>
 
@@ -25,12 +26,14 @@
 {
     <script>
         $(document).ready(function () {
-            //Binding the table data
+           
             var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""
                 },
+
+                 //Binding the table data in coloumn
                 columns: [
                     {
                         data: "name",
@@ -46,7 +49,11 @@
                         render: function (data) {
                             return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
                         }
-                    }
+                    },
+                    {
+                        data: "id",
+                        render: function (data) { return "<button class='btn-link js-update' data-customer-id=" + data + ">Update</button>"; }
+                    },
                 ]
             });
 

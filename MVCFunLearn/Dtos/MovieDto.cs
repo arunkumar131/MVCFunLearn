@@ -17,6 +17,9 @@ namespace MVCFunLearn.Dtos
         [Required]
         public byte GenreId { get; set; }
 
+        //Calling the GenreDto to get the name
+        public GenreDto Genre { get; set; }
+
         public DateTime DateAdded { get; set; }
 
         [Required]
