@@ -25,23 +25,26 @@ namespace MVCFunLearn.Controllers.Api
             return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
         }
 
-        //Get/api/customer/1
-        public CustomerDto GetCustomer(int id)
+        //Get/api/customer/id
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                //throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return Mapper.Map<Customer,CustomerDto>(customer);
+            //return Mapper.Map<Customer, CustomerDto>(customer);
+            return Ok(Mapper.Map<Customer,CustomerDto>(customer));
         }
 
         //POST/api/customers
         [HttpPost]
-        public CustomerDto CreateCustomer(CustomerDto customerDto)
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
+                //throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
@@ -49,10 +52,11 @@ namespace MVCFunLearn.Controllers.Api
 
             customerDto.Id = customer.Id;
 
-            return customerDto;
+            //return customerDto;
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
         }
 
-        // PUT /api/customer/1
+        // PUT/api/customer/id
         [HttpPut]
         public void UpdateCustomer(int id, CustomerDto customerDto)
         {
@@ -69,7 +73,7 @@ namespace MVCFunLearn.Controllers.Api
             _context.SaveChanges();
         }
 
-        //Delete/api/customers/1
+        //Delete/api/customers/id
         [HttpDelete]
         public void DeleteCustomer(int id)
         {
