@@ -3,6 +3,7 @@ using MVCFunLearn.Dtos;
 using MVCFunLearn.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,9 +21,16 @@ namespace MVCFunLearn.Controllers.Api
         }
 
         // Get/api/customers
-        public IEnumerable<CustomerDto> GetCustomer()
+        public IHttpActionResult GetCustomer()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            //var customerDtos = _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+
+            var customerDtos = _context.Customers
+                .Include(c=>c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+
+            return Ok(customerDtos);
         }
 
         //Get/api/customer/id
